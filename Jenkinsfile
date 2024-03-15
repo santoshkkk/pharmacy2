@@ -32,14 +32,14 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Install npm dependencies
-                sh 'npm predeploy'
+                sh 'npm build'
             }
         }
         
         stage('Build') {
             steps {
                 // Run npm build command
-                sh 'npm run build'
+                sh 'npm predeploy'
             }
         }
         
