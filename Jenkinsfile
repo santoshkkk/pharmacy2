@@ -23,65 +23,28 @@ pipeline {
             }
         }
         
-        stage('Print Workspace') {
+        stage('Install Dependencies') {
             steps {
-                echo "Workspace contents:"
-                sh "ls -la"
+                // Use the specified Node.js version
+                sh '/opt/.nvm/versions/node/v15.0.0/bin/node --version' // Verify Node.js version
+                
+                // Navigate to the project directory
+                dir('/var/lib/jenkins/workspace/POC') { // Path to the project directory
+                    // Run npm install
+                    sh "/opt/.nvm/versions/node/v15.0.0/bin/npm install"
+                }
             }
         }
-        
-        stage('Install Dependencies') {
-    steps {
-        // Use the specified Node.js version
-        sh '/opt/.nvm/versions/node/v15.0.0/bin/node --version' // Verify Node.js version
-        
-        // Navigate to the project directory
-        dir('/var/lib/jenkins/workspace/POC') { // Update 'your_project_directory' with the path to your project
-            // Run npm install
-            sh "/opt/.nvm/versions/node/v15.0.0/bin/npm run build"
-        }
-    }
-}
-
-
         
         stage('Build') {
             steps {
-                echo "Building on ${params.ENVIRONMENT} environment"
-                sh "echo ENVIRONMENT: ${params.ENVIRONMENT}"
-                    
-                // Run Webpack to bundle the application
-                sh 'webpack --config webpack.config.js'
+                // Build using npm
+                dir('/var/lib/jenkins/workspace/POC') { // Path to the project directory
+                    sh "/opt/.nvm/versions/node/v15.0.0/bin/npm run build"
+                }
             }
         }
         
-        stage('Test') {
-            steps {
-                // Run tests if applicable
-                sh 'npm test'
-            }
-        }
-        
-        stage('Build Image through Kaniko') {
-            steps {
-                echo "Build Image through Kaniko"
-                // Add Kaniko build steps here
-            }
-        }
-        
-        stage('Push Artifact to Nexus Repo') {
-            steps {
-                echo "Push Artifact to Nexus Repo"
-                // Add Nexus artifact push steps here
-            }
-        }
-        
-        stage('Deployment in EKS through Helm') {
-            steps {
-                echo "Current branch name: ${env.BRANCH_NAME}"
-                echo "Deployment in EKS through Helm"
-                // Add deployment steps here
-            }
-        }
+        // Add other stages as needed
     }
 }
