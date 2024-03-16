@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     environment {
-        NVM_DIR = "/home/ec2-user/.nvm"
-        PATH = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/ec2-user/.nvm/versions/node/v15.0.0/bin"
+        NVM_DIR = "/opt/.nvm"
+        PATH = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/.nvm/versions/node/v15.0.0/bin"
     }
     
     stages {
@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     // Source nvm.sh script
-                    sh 'source /home/ec2-user/.nvm/nvm.sh'
+                    sh 'source /opt/.nvm/nvm.sh'
                     
                     // Install Node.js 15.0.0
                     sh 'nvm install 15.0.0'
