@@ -7,6 +7,21 @@ pipeline {
     }
     
     stages {
+        stage('Setup') {
+            steps {
+                script {
+                    // Source nvm.sh script
+                    sh 'source /home/ec2-user/.nvm/nvm.sh'
+                    
+                    // Install Node.js 15.0.0
+                    sh 'nvm install 15.0.0'
+                    
+                    // Use Node.js 15.0.0
+                    sh 'nvm use 15.0.0'
+                }
+            }
+        }
+        
         stage('Record Trigger Branch') {
             steps {
                 script {
@@ -21,18 +36,6 @@ pipeline {
             }
         }
         
-        stage('Setup') {
-            steps {
-                sh 'bash -c "source /home/ec2-user/.nvm/nvm.sh && nvm install 15.0.0 && nvm use 15.0.0"'
-            }
-        }
-        
-        stage('Print Environment') {
-            steps {
-                sh 'printenv'
-            }
-        }
-
         stage('Checkout') {
             steps {
                 checkout scm
