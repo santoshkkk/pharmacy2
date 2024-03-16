@@ -52,7 +52,7 @@ pipeline {
                 // Publish using npm
                 withCredentials([file(credentialsId: 'npmuser', variable: 'npm')]) {
                     dir('/var/lib/jenkins/workspace/POC') { // Path to the project directory
-                        sh '$npm publish --userconfig $npm'
+                        sh 'npm publish --userconfig $npm'
                     }
                 }
             }
