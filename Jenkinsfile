@@ -33,15 +33,16 @@ pipeline {
         stage('Install Dependencies') {
     steps {
         // Use the specified Node.js version
-        sh '/opt/.nvm/versions/node/v15.0.0/bin/nvm use 15.0.0'
-
+        sh '/opt/.nvm/versions/node/v15.0.0/bin/node --version' // Verify Node.js version
+        
         // Navigate to the project directory
-        dir('/var/lib/jenkins/workspace/POC/') { // Update 'your_project_directory' with the path to your project
+        dir('/var/lib/jenkins/workspace/POC') { // Update 'your_project_directory' with the path to your project
             // Run npm install
             sh "/opt/.nvm/versions/node/v15.0.0/bin/npm run build"
         }
     }
 }
+
 
         
         stage('Build') {
