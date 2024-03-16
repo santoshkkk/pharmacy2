@@ -26,7 +26,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Add the node binary directory to the PATH
-                env.PATH = "/opt/.nvm/versions/node/v15.0.0/bin:${env.PATH}"
+                script {
+                    env.PATH = "/opt/.nvm/versions/node/v15.0.0/bin:${env.PATH}"
+                }
                 
                 // Navigate to the project directory
                 dir('/var/lib/jenkins/workspace/POC') { // Path to the project directory
