@@ -35,14 +35,14 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Install npm dependencies
-                sh 'npm build'
+                sh '/home/ec2-user/.nvm/versions/node/v15.0.0/bin/npm run build'
             }
         }
         
         stage('Build') {
             steps {
                 // Run npm build command
-                sh 'npm predeploy'
+                sh '/home/ec2-user/.nvm/versions/node/v15.0.0/bin/npm run predeploy'
             }
         }
         
