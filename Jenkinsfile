@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        PATH = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/ec2-user/.nvm/versions/node/v15.0.0/bin"
+    }
     
     stages {
         stage('Record Trigger Branch') {
