@@ -1,27 +1,7 @@
 pipeline {
     agent any
     
-    environment {
-        NVM_DIR = "/opt/.nvm"
-        PATH = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/.nvm/versions/node/v15.0.0/bin"
-    }
-    
     stages {
-        stage('Setup') {
-            steps {
-                script {
-                    // Source nvm.sh script
-                    sh 'source /opt/.nvm/nvm.sh'
-                    
-                    // Install Node.js 15.0.0
-                    sh 'nvm install 15.0.0'
-                    
-                    // Use Node.js 15.0.0
-                    sh 'nvm use 15.0.0'
-                }
-            }
-        }
-        
         stage('Record Trigger Branch') {
             steps {
                 script {
@@ -38,13 +18,61 @@ pipeline {
         
         stage('Checkout') {
             steps {
+                // Lightweight checkout support not available, falling back to full checkout
                 checkout scm
+            }
+        }
+        
+        stage('Print Workspace') {
+            steps {
+                echo "Workspace contents:"
+                sh "ls -la"
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                // Install npm dependencies
+                sh 'npm run build'
             }
         }
         
         stage('Build') {
             steps {
-                sh 'npm install && npm run build'
+                echo "Building on ${params.ENVIRONMENT} environment"
+                sh "echo ENVIRONMENT: ${params.ENVIRONMENT}"
+                    
+                // Run Webpack to bundle the application
+                sh 'webpack --config webpack.config.js'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                // Run tests if applicable
+                sh 'npm test'
+            }
+        }
+        
+        stage('Build Image through Kaniko') {
+            steps {
+                echo "Build Image through Kaniko"
+                // Add Kaniko build steps here
+            }
+        }
+        
+        stage('Push Artifact to Nexus Repo') {
+            steps {
+                echo "Push Artifact to Nexus Repo"
+                // Add Nexus artifact push steps here
+            }
+        }
+        
+        stage('Deployment in EKS through Helm') {
+            steps {
+                echo "Current branch name: ${env.BRANCH_NAME}"
+                echo "Deployment in EKS through Helm"
+                // Add deployment steps here
             }
         }
     }
