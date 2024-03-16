@@ -47,6 +47,17 @@ pipeline {
             }
         }
         
+        stage('Publish') {
+            steps {
+                // Publish using npm
+                withCredentials([file(credentialsId: 'npmuser', variable: 'npm')]) {
+                    dir('/var/lib/jenkins/workspace/POC') { // Path to the project directory
+                        sh '$npm publish --userconfig $npm'
+                    }
+                }
+            }
+        }
+        
         // Add other stages as needed
     }
 }
