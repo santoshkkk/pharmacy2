@@ -33,7 +33,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Install npm dependencies
-                sh 'npm run build'
+                sh '/opt/.nvm/versions/node/v15.0.0/bin/npm run build'
             }
         }
         
