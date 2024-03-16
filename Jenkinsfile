@@ -1,6 +1,8 @@
 pipeline {
     agent any
+    
     environment {
+        NVM_DIR = "/home/ec2-user/.nvm"
         PATH = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/ec2-user/.nvm/versions/node/v15.0.0/bin"
     }
     
@@ -25,27 +27,16 @@ pipeline {
             }
         }
         
-        stage('Print Workspace') {
+        stage('Setup') {
             steps {
-                echo "Workspace contents:"
-                sh "ls -la"
-            }
-        }
-        
-        stage('Install Dependencies') {
-            steps {
-                // Install npm dependencies
-                sh '/home/ec2-user/.nvm/versions/node/v15.0.0/bin/npm run build'
+                sh 'source /home/ec2-user/.nvm/nvm.sh && nvm install 15.0.0 && nvm use 15.0.0'
             }
         }
         
         stage('Build') {
             steps {
-                // Run npm build command
-                sh '/home/ec2-user/.nvm/versions/node/v15.0.0/bin/npm run predeploy'
+                sh 'npm install && npm run build'
             }
         }
-        
-        
     }
 }
