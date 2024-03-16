@@ -25,5 +25,8 @@
   "license": "Public",
   "devDependencies": {
     "mocha": "^10.3.0"
+  },
+  "publishConfig": {
+    "registry": "http://65.0.101.173:8081/repository/pharmacy1/"
   }
 }
