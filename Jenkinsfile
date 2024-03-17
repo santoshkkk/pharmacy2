@@ -16,12 +16,6 @@ pipeline {
             }
         }
         
-        stage('Checkout') {
-            steps {
-                // Lightweight checkout support not available, falling back to full checkout
-                checkout scm
-            }
-        }
         
         stage('Install Dependencies') {
             steps {
