@@ -16,7 +16,6 @@ pipeline {
             }
         }
         
-        
         stage('Install Dependencies') {
             steps {
                 // Add the node binary directory to the PATH
@@ -52,6 +51,23 @@ pipeline {
             }
         }
         
-        // Add other stages as needed
+        stage('Create Secret') {
+            steps {
+                script {
+                    sh 'kubectl version'
+                    env.REGISTRY_SERVER = 'https://index.docker.io/v1/'
+                    env.REGISTRY_USER = 'adwaitpawar'
+                    env.REGISTRY_PASS = 'Adwaittukarampawar@13'
+                    env.REGISTRY_EMAIL = 'adwaitpawar@gmail.com'
+                    sh 'kubectl create secret docker-registry dockercred --docker-server=$REGISTRY_SERVER --docker-username=$REGISTRY_USER --docker-password=$REGISTRY_PASS --docker-email=$REGISTRY_EMAIL'
+                }
+            }
+        }
+        
+        stage('Apply Configuration') {
+            steps {
+                sh 'kubectl apply --filename kaniko-git.yaml'
+            }
+        }
     }
 }
