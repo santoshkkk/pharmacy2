@@ -27,6 +27,6 @@
     "mocha": "^10.3.0"
   },
   "publishConfig": {
-    "registry": "http://65.0.101.173:8081/repository/pharmacy1/"
+    "registry": "http://13.233.94.10:8081/repository/npm_repo/"
   }
 }
