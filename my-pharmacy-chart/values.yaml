@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: santoshkitta/pharmacy9
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+
+# Add any additional configuration parameters here
+
+serviceAccount:
+  create: false
+
+ingress:
+  enabled: true
+
+autoscaling:
+  enabled: false
